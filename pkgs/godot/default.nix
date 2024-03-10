@@ -7,12 +7,24 @@
 , udev
 , fontconfig
 , dbus
-  alsaLib, libXcursor, libXinerama, libXrandr, libXrender, libX11, libXi, libXext, libxcb, libxkbcommon, libXfixes,
-  libpulseaudio, libGL, vulkan-loader
-  godotDesktopFile,
-  godotIconPNG,
-  godotIconSVG,
-  godotManpage
+, alsaLib
+, libXcursor
+, libXinerama
+, libXrandr
+, libXrender
+, libX11
+, libXi
+, libXext
+, libxcb
+, libxkbcommon
+, libXfixes
+, libpulseaudio
+, libGL
+, vulkan-loader
+, godotDesktopFile
+, godotIconPNG
+, godotIconSVG
+, godotManpage
 }:
 
 let
