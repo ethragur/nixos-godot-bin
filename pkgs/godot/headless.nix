@@ -1,5 +1,5 @@
-{ fetchurl,
-  godotBin
+{ fetchurl
+, godotBin
 }:
 
 let
@@ -8,7 +8,7 @@ in
 
 godotBin.overrideAttrs (oldAttrs: rec {
   pname = "godot-headless-bin";
-  version = "3.5.1";
+  version = "4.2.1";
 
   src = fetchurl {
     url = "https://downloads.tuxfamily.org/godotengine/${version}/Godot_v${version}-${qualifier}_linux_headless.64.zip";

@@ -1,12 +1,14 @@
-{ stdenv,
-  lib,
-  autoPatchelfHook,
-  makeWrapper,
-  fetchurl,
-  unzip,
-  udev,
-  alsaLib, libXcursor, libXinerama, libXrandr, libXrender, libX11, libXi,
-  libpulseaudio, libGL,
+{ stdenv
+, lib
+, autoPatchelfHook
+, makeWrapper
+, fetchurl
+, unzip
+, udev
+, fontconfig
+, dbus
+  alsaLib, libXcursor, libXinerama, libXrandr, libXrender, libX11, libXi, libXext, libxcb, libxkbcommon, libXfixes,
+  libpulseaudio, libGL, vulkan-loader
   godotDesktopFile,
   godotIconPNG,
   godotIconSVG,
@@ -19,24 +21,32 @@ in
 
 stdenv.mkDerivation rec {
   pname = "godot-bin";
-  version = "3.5.1";
+  version = "4.2.1";
 
   src = fetchurl {
-    url = "https://downloads.tuxfamily.org/godotengine/${version}/Godot_v${version}-${qualifier}_x11.64.zip";
-    sha256 = "kl5HGjL2mjxWktfubJXan/l7bmZu562VmD8iO6rQ4H0=";
+    url = "https://downloads.tuxfamily.org/godotengine/${version}/Godot_v${version}-${qualifier}_linux.x86_64.zip";
+    sha256 = "hjEannW3RF60IVMS5gTfH2nHLUZBrz5nBJ4wNWrjdmA=";
   };
 
-  nativeBuildInputs = [autoPatchelfHook makeWrapper unzip];
+  nativeBuildInputs = [ autoPatchelfHook makeWrapper unzip ];
 
   buildInputs = [
+    fontconfig
+    dbus
+    dbus.lib
     udev
     alsaLib
+    vulkan-loader
     libXcursor
     libXinerama
     libXrandr
     libXrender
     libX11
     libXi
+    libXfixes
+    libXext
+    libxcb
+    libxkbcommon
     libpulseaudio
     libGL
   ];
@@ -46,7 +56,7 @@ stdenv.mkDerivation rec {
   unpackCmd = "unzip $curSrc -d source";
   installPhase = ''
     mkdir -p $out/bin
-    install -m 0755 Godot_v${version}-${qualifier}_x11.64 $out/bin/godot
+    install -m 0755 Godot_v${version}-${qualifier}_linux.x86_64 $out/bin/godot
 
     # Only create a desktop file, if the necessary variables are set
     # these are set only, if one installs this program using flakes.
@@ -69,10 +79,10 @@ stdenv.mkDerivation rec {
   '';
 
   meta = {
-    homepage    = "https://godotengine.org";
+    homepage = "https://godotengine.org";
     description = "Free and Open Source 2D and 3D game engine";
-    license     = lib.licenses.mit;
-    platforms   = [ "i686-linux" "x86_64-linux" ];
+    license = lib.licenses.mit;
+    platforms = [ "i686-linux" "x86_64-linux" ];
     maintainers = [ lib.maintainers.twey ];
   };
 }
